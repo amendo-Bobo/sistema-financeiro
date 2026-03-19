@@ -1,0 +1,90 @@
+# ==========================================
+# GUIA DE INSTALAÇÃO - PC NOVO
+# Sistema de Finanças Pessoais
+# ==========================================
+
+Este guia vai te ajudar a instalar tudo necessário em um PC novo.
+
+## PASSO 1: Instalar Python
+
+### Download
+1. Acesse: https://python.org/downloads
+2. Clique em "Download Python 3.11.x" (versão mais recente da 3.11)
+
+### Instalação IMPORTANTE
+Durante a instalação, MARQUE estas opções:
+☑ ☑ ☑ "Add Python to PATH" (MUITO IMPORTANTE!)
+☑ ☑ ☑ "Install pip" 
+☑ ☑ ☑ "Install for all users"
+
+Clique em "Install Now" e aguarde.
+
+## PASSO 2: Instalar Node.js
+
+### Download
+1. Acesse: https://nodejs.org
+2. Clique no botão VERDE "LTS" (versão estável)
+
+### Instalação
+Execute o instalador e clique "Next" até terminar.
+
+## PASSO 3: Verificar Instalações
+
+Abra o Prompt de Comando (CMD) ou PowerShell e digite:
+
+```
+python --version
+```
+Deve aparecer: Python 3.11.x
+
+```
+pip --version
+```
+Deve aparecer: pip xx.x.x
+
+```
+node --version
+```
+Deve aparecer: v20.x.x
+
+```
+npm --version
+```
+Deve aparecer: 10.x.x
+
+## PASSO 4: Executar o Sistema
+
+Após instalar Python e Node.js:
+
+### Backend (Python)
+1. Abra o arquivo: `C:\Users\Usuario\CascadeProjects\sistema-financas\start-backend.bat`
+2. Aguarde a instalação automática
+3. O servidor iniciará em http://localhost:8000
+
+### Frontend (React)
+1. Abra o Prompt de Comando
+2. Execute:
+```
+cd C:\Users\Usuario\CascadeProjects\sistema-financas\frontend
+npm install
+npm run dev
+```
+3. Acesse http://localhost:3000
+
+## PROBLEMAS COMUNS
+
+### "python não é reconhecido"
+- Python não foi adicionado ao PATH
+- Solução: Reinstale Python marcando "Add Python to PATH"
+
+### "pip não é reconhecido"
+- Python foi instalado sem pip
+- Solução: Reinstale Python marcando "Install pip"
+
+### "node não é reconhecido"
+- Node.js não foi instalado corretamente
+- Solução: Reinstale o Node.js
+
+## DÚVIDAS?
+
+Se tiver problemas, me informe qual erro aparece que ajudo a resolver!
