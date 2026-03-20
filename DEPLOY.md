@@ -10,7 +10,7 @@
    git add .
    git commit -m "Ready for production"
    git branch -M main
-   git remote add origin https://github.com/emendo-Bobo/financia.git
+   git remote add origin https://github.com/SEU-USUARIO/sistema-financeiro.git
    git push -u origin main
    ```
 
@@ -28,8 +28,8 @@
 ### 🔧 Variáveis de Ambiente (Render):
 
 ```
-DATABASE_URL=postgresql://postgres:[Hr162005]@db.gbnibcoshpgwzqkkugsb.supabase.co:5432/postgres
-SECRET_KEY=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImdibmliY29zaHBnd3pxa2t1Z3NiIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzM5NDYxNDYsImV4cCI6MjA4OTUyMjE0Nn0.SoAvxOGG4Q6eNGgNco5b7KAYaQ9cwgkgdcGGX6CHx5Q
+DATABASE_URL=postgresql://postgres:[SUA-SENHA]@db.[SEU-PROJETO].supabase.co:5432/postgres
+SECRET_KEY=[SUA-SECRET-KEY-AQUI]
 ALGORITHM=HS256
 ACCESS_TOKEN_EXPIRE_MINUTES=30
 ```
