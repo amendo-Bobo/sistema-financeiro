@@ -41,7 +41,7 @@ class TokenData(BaseModel):
 
 class TransacaoBase(BaseModel):
     descricao: str = Field(..., min_length=1, max_length=255)
-    valor: Decimal = Field(..., gt=0, decimal_places=2)
+    valor: Decimal = Field(..., gt=0)
     tipo: TipoTransacao
     categoria: CategoriaTransacao = CategoriaTransacao.OUTROS
     data: date
@@ -55,7 +55,7 @@ class TransacaoCreate(TransacaoBase):
 
 class TransacaoUpdate(BaseModel):
     descricao: Optional[str] = Field(None, min_length=1, max_length=255)
-    valor: Optional[Decimal] = Field(None, gt=0, decimal_places=2)
+    valor: Optional[Decimal] = Field(None, gt=0)
     tipo: Optional[TipoTransacao] = None
     categoria: Optional[CategoriaTransacao] = None
     data: Optional[date] = None
