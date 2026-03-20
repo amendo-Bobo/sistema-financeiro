@@ -103,7 +103,7 @@ class ContaBancariaBase(BaseModel):
     agencia: Optional[str] = Field(None, max_length=50)
     conta: Optional[str] = Field(None, max_length=100)
     tipo_conta: Optional[str] = None
-    saldo: Decimal = Field(default=0, decimal_places=2)
+    saldo: Decimal = Field(default=0)
 
 class ContaBancariaCreate(ContaBancariaBase):
     pass
@@ -113,7 +113,7 @@ class ContaBancariaUpdate(BaseModel):
     agencia: Optional[str] = Field(None, max_length=50)
     conta: Optional[str] = Field(None, max_length=100)
     tipo_conta: Optional[str] = None
-    saldo: Optional[Decimal] = Field(None, decimal_places=2)
+    saldo: Optional[Decimal] = Field(None)
     is_active: Optional[bool] = None
 
 class ContaBancaria(ContaBancariaBase):
@@ -133,7 +133,7 @@ class OrcamentoMensalBase(BaseModel):
     ano: int = Field(..., ge=2000, le=2100)
     mes: int = Field(..., ge=1, le=12)
     categoria: CategoriaTransacao
-    valor_orcado: Decimal = Field(..., gt=0, decimal_places=2)
+    valor_orcado: Decimal = Field(..., gt=0)
 
 class OrcamentoMensalCreate(OrcamentoMensalBase):
     pass
