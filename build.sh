@@ -6,7 +6,7 @@ echo "🚀 Iniciando build completo..."
 
 # Instalar dependências do backend
 echo "📦 Installing backend dependencies..."
-pip install -r requirements.txt
+pip install -r backend/requirements.txt
 
 # Build do Frontend
 echo "📦 Building frontend..."
