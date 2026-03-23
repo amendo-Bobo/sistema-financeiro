@@ -6,16 +6,16 @@ echo "🚀 Iniciando build completo..."
 
 # Build do Frontend
 echo "📦 Building frontend..."
-cd frontend
+cd ../frontend
 npm install
 npm run build
-cd ..
+cd ../backend
 
 # Verificar se o build foi criado
-if [ -d "backend/static" ]; then
+if [ -d "static" ]; then
     echo "✅ Frontend buildado com sucesso!"
-    echo "📁 Arquivos em backend/static:"
-    ls -la backend/static/
+    echo "📁 Arquivos em static:"
+    ls -la static/
 else
     echo "❌ Erro: Frontend não foi buildado"
     exit 1
