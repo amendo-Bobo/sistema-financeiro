@@ -4,6 +4,10 @@
 
 echo "🚀 Iniciando build completo..."
 
+# Instalar dependências do backend
+echo "📦 Installing backend dependencies..."
+pip install -r requirements.txt
+
 # Build do Frontend
 echo "📦 Building frontend..."
 cd ../frontend
