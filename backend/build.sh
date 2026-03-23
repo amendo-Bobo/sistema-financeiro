@@ -12,6 +12,7 @@ pip install --no-cache-dir -r backend/requirements.txt
 # Build do Frontend
 echo "📦 Building frontend..."
 cd frontend
+
 npm ci --silent
 npm run build
 cd ..
