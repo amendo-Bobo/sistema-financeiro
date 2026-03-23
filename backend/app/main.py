@@ -49,13 +49,26 @@ def root():
     static_dir = Path(__file__).parent.parent / "static"
     index_file = static_dir / "index.html"
     
+    print(f"DEBUG: static_dir exists: {static_dir.exists()}")
+    print(f"DEBUG: index_file exists: {index_file.exists()}")
+    print(f"DEBUG: static_dir path: {static_dir}")
+    print(f"DEBUG: index_file path: {index_file}")
+    
     if index_file.exists():
+        print("DEBUG: Serving index.html")
         return FileResponse(str(index_file))
     
+    print("DEBUG: Serving JSON fallback")
     return {
         "app": settings.APP_NAME,
         "version": "1.0.0",
-        "status": "online"
+        "status": "online",
+        "debug": {
+            "static_dir_exists": static_dir.exists(),
+            "index_file_exists": index_file.exists(),
+            "static_dir_path": str(static_dir),
+            "index_file_path": str(index_file)
+        }
     }
 
 @app.get("/health")
