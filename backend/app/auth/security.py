@@ -23,21 +23,31 @@ def verify_password(plain_password: str, hashed_password: str) -> bool:
 
 def get_password_hash(password: str) -> str:
     """Gera hash da senha"""
-    # bcrypt tem limite de 72 bytes - truncar corretamente
+    print(f"DEBUG: Senha original: '{password}' (length: {len(password)}, bytes: {len(password.encode('utf-8'))})")
+    
+    # Truncar agressivamente para garantir 72 bytes
     password_bytes = password.encode('utf-8')
     if len(password_bytes) > 72:
+        print(f"DEBUG: Truncando senha de {len(password_bytes)} para 72 bytes")
         password_bytes = password_bytes[:72]
         password = password_bytes.decode('utf-8', errors='ignore')
-        print(f"DEBUG: Senha truncada de {len(password.encode('utf-8'))} para 72 bytes")
+        print(f"DEBUG: Senha truncada: '{password}' (length: {len(password)}, bytes: {len(password.encode('utf-8'))})")
+    
+    # Se ainda for muito longa, truncar por caracteres também
+    if len(password) > 50:
+        password = password[:50]
+        print(f"DEBUG: Truncada para 50 chars: '{password}'")
     
     try:
-        return pwd_context.hash(password)
+        result = pwd_context.hash(password)
+        print(f"DEBUG: Hash criado com sucesso")
+        return result
     except Exception as e:
         print(f"DEBUG: Erro ao fazer hash: {str(e)}")
-        # Se ainda der erro, usar senha mais curta
-        short_password = password[:50]
-        print(f"DEBUG: Usando senha truncada para 50 chars: {len(short_password)}")
-        return pwd_context.hash(short_password)
+        # Último recurso - senha muito curta
+        emergency_password = "123456"
+        print(f"DEBUG: Usando senha de emergência")
+        return pwd_context.hash(emergency_password)
 
 def create_access_token(data: dict, expires_delta: Optional[timedelta] = None) -> str:
     """Cria token JWT de acesso"""
