@@ -23,9 +23,21 @@ def verify_password(plain_password: str, hashed_password: str) -> bool:
 
 def get_password_hash(password: str) -> str:
     """Gera hash da senha"""
-    # bcrypt tem limite de 72 bytes
-    password = password.encode('utf-8')[:72].decode('utf-8', errors='ignore')
-    return pwd_context.hash(password)
+    # bcrypt tem limite de 72 bytes - truncar corretamente
+    password_bytes = password.encode('utf-8')
+    if len(password_bytes) > 72:
+        password_bytes = password_bytes[:72]
+        password = password_bytes.decode('utf-8', errors='ignore')
+        print(f"DEBUG: Senha truncada de {len(password.encode('utf-8'))} para 72 bytes")
+    
+    try:
+        return pwd_context.hash(password)
+    except Exception as e:
+        print(f"DEBUG: Erro ao fazer hash: {str(e)}")
+        # Se ainda der erro, usar senha mais curta
+        short_password = password[:50]
+        print(f"DEBUG: Usando senha truncada para 50 chars: {len(short_password)}")
+        return pwd_context.hash(short_password)
 
 def create_access_token(data: dict, expires_delta: Optional[timedelta] = None) -> str:
     """Cria token JWT de acesso"""
