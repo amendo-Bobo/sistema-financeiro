@@ -2,9 +2,12 @@
 from contextlib import asynccontextmanager
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.staticfiles import StaticFiles
+from fastapi.responses import FileResponse
 from app.config import get_settings
 from app.database import engine, Base
 from app.routers import auth, transacoes, dashboard, contas, importacao
+from pathlib import Path
 
 settings = get_settings()
 
@@ -53,3 +56,33 @@ def root():
 def health_check():
     """Health check endpoint"""
     return {"status": "healthy"}
+
+# Servir arquivos estáticos do frontend (se existirem)
+static_dir = Path(__file__).parent.parent / "static"
+if static_dir.exists():
+    app.mount("/assets", StaticFiles(directory=str(static_dir / "assets")), name="assets")
+    
+    @app.get("/{full_path:path}")
+    async def serve_frontend(full_path: str):
+        """Serve frontend React app for all non-API routes"""
+        # Se for uma rota da API, não serve o frontend
+        if full_path.startswith("api/") or full_path in ["health", "docs", "openapi.json"]:
+            return {"detail": "Not Found"}
+        
+        # Tenta servir o arquivo estático
+        file_path = static_dir / full_path
+        if file_path.exists() and file_path.is_file():
+            return FileResponse(str(file_path))
+        
+        # Se não encontrar, serve o index.html (SPA behavior)
+        index_file = static_dir / "index.html"
+        if index_file.exists():
+            return FileResponse(str(index_file))
+        
+        # Se não houver frontend buildado, retorna JSON da API
+        return {
+            "app": settings.APP_NAME,
+            "version": "1.0.0",
+            "status": "online",
+            "message": "API is running. Frontend not built yet."
+        }
