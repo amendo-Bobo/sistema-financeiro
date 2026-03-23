@@ -45,7 +45,13 @@ app.include_router(importacao.router, prefix="/api")
 
 @app.get("/")
 def root():
-    """Endpoint raiz"""
+    """Endpoint raiz - serve frontend ou API"""
+    static_dir = Path(__file__).parent.parent / "static"
+    index_file = static_dir / "index.html"
+    
+    if index_file.exists():
+        return FileResponse(str(index_file))
+    
     return {
         "app": settings.APP_NAME,
         "version": "1.0.0",
