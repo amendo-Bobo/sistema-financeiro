@@ -1,7 +1,7 @@
 services:
   - type: web
     name: sistema-financeiro
-    runtime: python
+    runtime: python-3.11
     buildCommand: chmod +x backend/build.sh && ./backend/build.sh
     startCommand: cd backend && python -m gunicorn app.main:app --worker-class uvicorn.workers.UvicornWorker --bind 0.0.0.0:$PORT
     envVars:
