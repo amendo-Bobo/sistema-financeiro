@@ -7,5 +7,5 @@ services:
     envVars:
       - key: PYTHON_VERSION
         value: 3.11.9
-      - key: DATABASE_URL
-        value: postgresql://postgres.zbfhalzyyfobldzfnioy:FFyVPjKDJEJDeu4q@aws-0-us-west-2.pooler.supabase.com:6543/postgres
+      - key: PIP_VERSION
+        value: 24.0
