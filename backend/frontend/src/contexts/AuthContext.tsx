@@ -1,11 +1,13 @@
 import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
 import { User } from '../types';
+import { authService } from '../services/api';
 
 interface AuthContextType {
   user: User | null;
   login: (email: string, password: string) => Promise<void>;
   logout: () => void;
   register: (userData: any) => Promise<void>;
+  loading: boolean;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -20,10 +22,36 @@ export const useAuth = () => {
 
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [user, setUser] = useState<User | null>(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const checkAuth = async () => {
+      const token = localStorage.getItem('token');
+      if (token) {
+        try {
+          const currentUser = await authService.getCurrentUser();
+          setUser(currentUser);
+        } catch (error) {
+          localStorage.removeItem('token');
+        }
+      }
+      setLoading(false);
+    };
+
+    checkAuth();
+  }, []);
 
   const login = async (email: string, password: string) => {
-    // TODO: Implement login logic
-    console.log('Login:', email, password);
+    try {
+      const response = await authService.login({ email, password });
+      localStorage.setItem('token', response.access_token);
+      
+      // Get user data
+      const userData = await authService.getCurrentUser();
+      setUser(userData);
+    } catch (error: any) {
+      throw new Error(error.response?.data?.detail || 'Erro ao fazer login');
+    }
   };
 
   const logout = () => {
@@ -32,8 +60,13 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   };
 
   const register = async (userData: any) => {
-    // TODO: Implement register logic
-    console.log('Register:', userData);
+    try {
+      await authService.register(userData);
+      // Registration successful, but don't auto-login
+      // User needs to login explicitly
+    } catch (error: any) {
+      throw new Error(error.response?.data?.detail || 'Erro ao criar conta');
+    }
   };
 
   const value: AuthContextType = {
@@ -41,6 +74,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     login,
     logout,
     register,
+    loading,
   };
 
   return (
