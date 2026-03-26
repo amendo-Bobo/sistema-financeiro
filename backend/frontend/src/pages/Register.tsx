@@ -34,7 +34,7 @@ const Register = () => {
 
     try {
       await register({
-        name: formData.name,
+        nome: formData.name,  // Mudar para "nome" para corresponder ao schema
         email: formData.email,
         password: formData.password
       });
