@@ -55,6 +55,8 @@ def login(
     """Login do usuário e retorno do token JWT"""
     try:
         print(f"DEBUG: Login attempt for username: {form_data.username}")
+        print(f"DEBUG: Username type: {type(form_data.username)}")
+        print(f"DEBUG: Username value: '{str(form_data.username)}'")
         
         user = authenticate_user(db, form_data.username, form_data.password)
         if not user:
