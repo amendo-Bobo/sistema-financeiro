@@ -46,12 +46,12 @@ app.include_router(importacao.router, prefix="/api")
 @app.get("/")
 def root():
     """Endpoint raiz - serve frontend ou API"""
-    static_dir = Path(__file__).parent.parent / "static"
-    index_file = static_dir / "index.html"
+    frontend_dir = Path(__file__).parent.parent / "frontend" / "dist"
+    index_file = frontend_dir / "index.html"
     
-    print(f"DEBUG: static_dir exists: {static_dir.exists()}")
+    print(f"DEBUG: frontend_dir exists: {frontend_dir.exists()}")
     print(f"DEBUG: index_file exists: {index_file.exists()}")
-    print(f"DEBUG: static_dir path: {static_dir}")
+    print(f"DEBUG: frontend_dir path: {frontend_dir}")
     print(f"DEBUG: index_file path: {index_file}")
     
     if index_file.exists():
@@ -64,9 +64,9 @@ def root():
         "version": "1.0.0",
         "status": "online",
         "debug": {
-            "static_dir_exists": static_dir.exists(),
+            "frontend_dir_exists": frontend_dir.exists(),
             "index_file_exists": index_file.exists(),
-            "static_dir_path": str(static_dir),
+            "frontend_dir_path": str(frontend_dir),
             "index_file_path": str(index_file)
         }
     }
@@ -77,9 +77,9 @@ def health_check():
     return {"status": "healthy"}
 
 # Servir arquivos estáticos do frontend (se existirem)
-static_dir = Path(__file__).parent.parent / "static"
-if static_dir.exists():
-    app.mount("/assets", StaticFiles(directory=str(static_dir / "assets")), name="assets")
+frontend_dir = Path(__file__).parent.parent / "frontend" / "dist"
+if frontend_dir.exists():
+    app.mount("/assets", StaticFiles(directory=str(frontend_dir / "assets")), name="assets")
     
     @app.get("/{full_path:path}")
     async def serve_frontend(full_path: str):
@@ -89,12 +89,12 @@ if static_dir.exists():
             return {"detail": "Not Found"}
         
         # Tenta servir o arquivo estático
-        file_path = static_dir / full_path
+        file_path = frontend_dir / full_path
         if file_path.exists() and file_path.is_file():
             return FileResponse(str(file_path))
         
         # Se não encontrar, serve o index.html (SPA behavior)
-        index_file = static_dir / "index.html"
+        index_file = frontend_dir / "index.html"
         if index_file.exists():
             return FileResponse(str(index_file))
         
