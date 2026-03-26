@@ -57,8 +57,23 @@ def login(
         print(f"DEBUG: Login attempt for username: {form_data.username}")
         print(f"DEBUG: Username type: {type(form_data.username)}")
         print(f"DEBUG: Username value: '{str(form_data.username)}'")
+        print(f"DEBUG: Username repr: {repr(form_data.username)}")
+        print(f"DEBUG: Username dir: {dir(form_data)}")
+        print(f"DEBUG: Form data: {form_data.__dict__}")
         
-        user = authenticate_user(db, form_data.username, form_data.password)
+        # Forçar conversão para string
+        username = str(form_data.username)
+        if username == '[object Object]':
+            print(f"DEBUG: Forcing string conversion failed!")
+            # Tentar pegar o valor de outra forma
+            if hasattr(form_data, '_username'):
+                username = form_data._username
+            elif hasattr(form_data, 'username'):
+                username = getattr(form_data, 'username', '')
+        
+        print(f"DEBUG: Final username: '{username}'")
+        
+        user = authenticate_user(db, username, form_data.password)
         if not user:
             print(f"DEBUG: Authentication failed for: {form_data.username}")
             raise HTTPException(
