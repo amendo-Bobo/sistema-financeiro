@@ -48,14 +48,30 @@ def listar_transacoes(
         categoria=categoria
     )
 
-@router.post("/", response_model=Transacao, status_code=201)
+@router.post("/", response_model=Transacao, status_code=status.HTTP_201_CREATED)
 def criar_transacao(
     transacao: TransacaoCreate,
     db: Session = Depends(get_db),
     current_user: User = Depends(get_current_active_user)
 ):
-    """Cria uma nova transação"""
-    return create_transacao(db=db, transacao=transacao, usuario_id=current_user.id)
+    """Criar nova transação"""
+    try:
+        print(f"DEBUG: Transacao recebida: {transacao}")
+        print(f"DEBUG: Tipo: {transacao.tipo} (type: {type(transacao.tipo)})")
+        print(f"DEBUG: Categoria: {transacao.categoria} (type: {type(transacao.categoria)})")
+        
+        transacao.usuario_id = current_user.id
+        result = create_transacao(db=db, transacao=transacao)
+        
+        print(f"DEBUG: Transacao criada: {result}")
+        return result
+        
+    except Exception as e:
+        print(f"DEBUG: Erro ao criar transação: {str(e)}")
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail=str(e)
+        )
 
 @router.get("/{transacao_id}", response_model=Transacao)
 def obter_transacao(
