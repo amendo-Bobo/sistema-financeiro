@@ -22,20 +22,20 @@ export interface AuthResponse {
   token_type: string
 }
 
-export type TipoTransacao = 'ENTRADA' | 'SAIDA'
+export type TipoTransacao = 'entrada' | 'saida'
 
 export type CategoriaTransacao = 
-  | 'ALIMENTACAO' 
-  | 'TRANSPORTE' 
-  | 'MORADIA' 
-  | 'SAUDE' 
-  | 'EDUCACAO' 
-  | 'LAZER' 
-  | 'VESTUARIO' 
-  | 'UTILIDADES' 
-  | 'SALARIO' 
-  | 'INVESTIMENTOS' 
-  | 'OUTROS'
+  | 'alimentacao' 
+  | 'transporte' 
+  | 'moradia' 
+  | 'saude' 
+  | 'educacao' 
+  | 'lazer' 
+  | 'vestuario' 
+  | 'utilidades' 
+  | 'salario' 
+  | 'investimentos' 
+  | 'outros'
 
 export interface Transacao {
   id: number

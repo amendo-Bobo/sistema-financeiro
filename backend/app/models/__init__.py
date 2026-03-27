@@ -7,21 +7,21 @@ from app.database import Base
 import enum
 
 class TipoTransacao(str, enum.Enum):
-    ENTRADA = "ENTRADA"
-    SAIDA = "SAIDA"
+    ENTRADA = "entrada"
+    SAIDA = "saida"
 
 class CategoriaTransacao(str, enum.Enum):
-    ALIMENTACAO = "ALIMENTACAO"
-    TRANSPORTE = "TRANSPORTE"
-    MORADIA = "MORADIA"
-    SAUDE = "SAUDE"
-    EDUCACAO = "EDUCACAO"
-    LAZER = "LAZER"
-    VESTUARIO = "VESTUARIO"
-    UTILIDADES = "UTILIDADES"
-    SALARIO = "SALARIO"
-    INVESTIMENTOS = "INVESTIMENTOS"
-    OUTROS = "OUTROS"
+    ALIMENTACAO = "alimentacao"
+    TRANSPORTE = "transporte"
+    MORADIA = "moradia"
+    SAUDE = "saude"
+    EDUCACAO = "educacao"
+    LAZER = "lazer"
+    VESTUARIO = "vestuario"
+    UTILIDADES = "utilidades"
+    SALARIO = "salario"
+    INVESTIMENTOS = "investimentos"
+    OUTROS = "outros"
 
 class User(Base):
     """Usuário do sistema"""
