@@ -25,7 +25,14 @@ export default function NovaTransacao() {
     setError('')
 
     try {
-      await transacaoService.createTransacao(formData)
+      // Converter tipo para minúsculas para garantir compatibilidade
+      const dataToSend = {
+        ...formData,
+        tipo: formData.tipo.toLowerCase(),
+        categoria: formData.categoria.toLowerCase()
+      }
+      
+      await transacaoService.createTransacao(dataToSend)
       navigate('/transacoes')
     } catch (err: any) {
       setError(err.response?.data?.detail || 'Erro ao criar transação')
