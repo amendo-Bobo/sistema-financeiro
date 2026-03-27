@@ -8,6 +8,7 @@ export default function NovaTransacao() {
   const navigate = useNavigate()
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState('')
+  const [success, setSuccess] = useState('')
   const [formData, setFormData] = useState<TransacaoCreate>({
     descricao: '',
     valor: 0,
@@ -23,11 +24,32 @@ export default function NovaTransacao() {
     e.preventDefault()
     setLoading(true)
     setError('')
+    setSuccess('')
 
     try {
       console.log('DEBUG: FormData sendo enviado:', formData)
       await transacaoService.createTransacao(formData)
-      navigate('/transacoes')
+      
+      // Mostrar mensagem de sucesso
+      setSuccess('Transação adicionada com sucesso!')
+      
+      // Limpar formulário
+      setFormData({
+        descricao: '',
+        valor: 0,
+        tipo: 'saida',
+        categoria: 'outros',
+        data: new Date().toISOString().split('T')[0],
+        is_fixa: false,
+        is_recorrente: false,
+        observacoes: ''
+      })
+      
+      // Esconder mensagem após 3 segundos
+      setTimeout(() => {
+        setSuccess('')
+      }, 3000)
+      
     } catch (err: any) {
       console.log('DEBUG: Erro completo:', err)
       console.log('DEBUG: Erro response:', err.response?.data)
@@ -74,6 +96,12 @@ export default function NovaTransacao() {
       {error && (
         <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded mb-4">
           {error}
+        </div>
+      )}
+
+      {success && (
+        <div className="bg-green-50 border border-green-200 text-green-700 px-4 py-3 rounded mb-4">
+          {success}
         </div>
       )}
 
