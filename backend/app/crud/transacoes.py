@@ -43,14 +43,7 @@ def create_transacao(db: Session, transacao: TransacaoCreate, usuario_id: int) -
     transacao_data = transacao.model_dump()
     transacao_data.pop('usuario_id', None)
     
-    # Conversão direta como no login
-    if 'tipo' in transacao_data:
-        transacao_data['tipo'] = str(transacao_data['tipo']).lower()
-    if 'categoria' in transacao_data:
-        transacao_data['categoria'] = str(transacao_data['categoria']).lower()
-    
-    print(f"DEBUG: Final tipo: '{transacao_data['tipo']}'")
-    print(f"DEBUG: Final categoria: '{transacao_data['categoria']}'")
+    print(f"DEBUG: Transação data: {transacao_data}")
     
     db_transacao = Transacao(
         **transacao_data,

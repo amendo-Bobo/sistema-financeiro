@@ -48,8 +48,8 @@ class Transacao(Base):
     usuario_id = Column(Integer, ForeignKey("users.id"), nullable=False)
     descricao = Column(String(255), nullable=False)
     valor = Column(Numeric(10, 2), nullable=False)
-    tipo = Column(Enum(TipoTransacao), nullable=False)
-    categoria = Column(Enum(CategoriaTransacao), nullable=True)
+    tipo = Column(String(20), nullable=False)  # Mudar para string
+    categoria = Column(String(50), nullable=True)  # Mudar para string
     categoria_personalizada_id = Column(Integer, ForeignKey("categorias_personalizadas.id"), nullable=True)
     data = Column(Date, nullable=False)
     is_fixa = Column(Boolean, default=False)
