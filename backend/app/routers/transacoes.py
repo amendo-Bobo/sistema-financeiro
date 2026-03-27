@@ -61,7 +61,7 @@ def criar_transacao(
         print(f"DEBUG: Categoria: {transacao.categoria} (type: {type(transacao.categoria)})")
         
         transacao.usuario_id = current_user.id
-        result = create_transacao(db=db, transacao=transacao)
+        result = create_transacao(db=db, transacao=transacao, usuario_id=current_user.id)
         
         print(f"DEBUG: Transacao criada: {result}")
         return result
