@@ -12,8 +12,8 @@ export default function NovaTransacao() {
   const [formData, setFormData] = useState<TransacaoCreate>({
     descricao: '',
     valor: 0,
-    tipo: 'saida',
-    categoria: 'outros',
+    tipo: 'SAIDA',
+    categoria: 'OUTROS',
     data: new Date().toISOString().split('T')[0],
     is_fixa: false,
     is_recorrente: false,
@@ -37,8 +37,8 @@ export default function NovaTransacao() {
       setFormData({
         descricao: '',
         valor: 0,
-        tipo: 'saida',
-        categoria: 'outros',
+        tipo: 'SAIDA',
+        categoria: 'OUTROS',
         data: new Date().toISOString().split('T')[0],
         is_fixa: false,
         is_recorrente: false,
@@ -68,17 +68,17 @@ export default function NovaTransacao() {
   }
 
   const categorias = [
-    { value: 'alimentacao', label: 'Alimentação' },
-    { value: 'transporte', label: 'Transporte' },
-    { value: 'moradia', label: 'Moradia' },
-    { value: 'saude', label: 'Saúde' },
-    { value: 'educacao', label: 'Educação' },
-    { value: 'lazer', label: 'Lazer' },
-    { value: 'vestuario', label: 'Vestuário' },
-    { value: 'utilidades', label: 'Utilidades' },
-    { value: 'salario', label: 'Salário' },
-    { value: 'investimentos', label: 'Investimentos' },
-    { value: 'outros', label: 'Outros' },
+    { value: 'ALIMENTACAO', label: 'Alimentação' },
+    { value: 'TRANSPORTE', label: 'Transporte' },
+    { value: 'MORADIA', label: 'Moradia' },
+    { value: 'SAUDE', label: 'Saúde' },
+    { value: 'EDUCACAO', label: 'Educação' },
+    { value: 'LAZER', label: 'Lazer' },
+    { value: 'VESTUARIO', label: 'Vestuário' },
+    { value: 'UTILIDADES', label: 'Utilidades' },
+    { value: 'SALARIO', label: 'Salário' },
+    { value: 'INVESTIMENTOS', label: 'Investimentos' },
+    { value: 'OUTROS', label: 'Outros' },
   ]
 
   return (
@@ -116,8 +116,8 @@ export default function NovaTransacao() {
               className="input"
               required
             >
-              <option value="entrada">Entrada (+)</option>
-              <option value="saida">Saída (-)</option>
+              <option value="ENTRADA">Entrada (+)</option>
+              <option value="SAIDA">Saída (-)</option>
             </select>
           </div>
 
