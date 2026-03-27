@@ -42,8 +42,8 @@ class TokenData(BaseModel):
 class TransacaoBase(BaseModel):
     descricao: str = Field(..., min_length=1, max_length=255)
     valor: Decimal = Field(..., gt=0)
-    tipo: TipoTransacao
-    categoria: CategoriaTransacao = CategoriaTransacao.OUTROS
+    tipo: str  # Mudar para string
+    categoria: str = "outros"  # Mudar para string
     data: date
     is_fixa: bool = False
     is_recorrente: bool = False
