@@ -43,11 +43,20 @@ def create_transacao(db: Session, transacao: TransacaoCreate, usuario_id: int) -
     transacao_data = transacao.model_dump()
     transacao_data.pop('usuario_id', None)
     
-    # Forçar valores para minúsculas para compatibilidade com banco
+    # Extrair valor literal do enum para compatibilidade com banco
     if 'tipo' in transacao_data:
-        transacao_data['tipo'] = str(transacao_data['tipo']).lower()
+        # Se for objeto enum, pegar o valor
+        if hasattr(transacao_data['tipo'], 'value'):
+            transacao_data['tipo'] = transacao_data['tipo'].value
+        else:
+            transacao_data['tipo'] = str(transacao_data['tipo']).lower()
+    
     if 'categoria' in transacao_data:
-        transacao_data['categoria'] = str(transacao_data['categoria']).lower()
+        # Se for objeto enum, pegar o valor
+        if hasattr(transacao_data['categoria'], 'value'):
+            transacao_data['categoria'] = transacao_data['categoria'].value
+        else:
+            transacao_data['categoria'] = str(transacao_data['categoria']).lower()
     
     db_transacao = Transacao(
         **transacao_data,
