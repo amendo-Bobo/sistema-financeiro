@@ -51,7 +51,7 @@ class TransacaoBase(BaseModel):
     categoria_personalizada_id: Optional[int] = None
 
 class TransacaoCreate(TransacaoBase):
-    pass
+    usuario_id: Optional[int] = None
 
 class TransacaoUpdate(BaseModel):
     descricao: Optional[str] = Field(None, min_length=1, max_length=255)
