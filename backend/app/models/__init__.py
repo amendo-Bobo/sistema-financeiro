@@ -41,17 +41,17 @@ class User(Base):
     categorias_personalizadas = relationship("CategoriaPersonalizada", back_populates="usuario", cascade="all, delete-orphan")
 
 class Transacao(Base):
-    """Transação financeira (entrada ou saída)"""
+    """Transação financeira"""
     __tablename__ = "transacoes"
     
     id = Column(Integer, primary_key=True, index=True)
     usuario_id = Column(Integer, ForeignKey("users.id"), nullable=False)
     descricao = Column(String(255), nullable=False)
-    valor = Column(Numeric(15, 2), nullable=False)
+    valor = Column(Numeric(10, 2), nullable=False)
     tipo = Column(Enum(TipoTransacao), nullable=False)
-    categoria = Column(Enum(CategoriaTransacao), default=CategoriaTransacao.OUTROS)
+    categoria = Column(Enum(CategoriaTransacao), nullable=True)
     categoria_personalizada_id = Column(Integer, ForeignKey("categorias_personalizadas.id"), nullable=True)
-    data = Column(Date, default=date.today)
+    data = Column(Date, nullable=False)
     is_fixa = Column(Boolean, default=False)
     is_recorrente = Column(Boolean, default=False)
     observacoes = Column(Text, nullable=True)
@@ -61,6 +61,22 @@ class Transacao(Base):
     # Relacionamentos
     usuario = relationship("User", back_populates="transacoes")
     categoria_personalizada = relationship("CategoriaPersonalizada", back_populates="transacoes")
+    
+    def __init__(self, **kwargs):
+        # Forçar valores para minúsculas
+        if 'tipo' in kwargs and kwargs['tipo']:
+            if isinstance(kwargs['tipo'], str):
+                kwargs['tipo'] = kwargs['tipo'].lower()
+            elif hasattr(kwargs['tipo'], 'value'):
+                kwargs['tipo'] = kwargs['tipo'].value.lower()
+        
+        if 'categoria' in kwargs and kwargs['categoria']:
+            if isinstance(kwargs['categoria'], str):
+                kwargs['categoria'] = kwargs['categoria'].lower()
+            elif hasattr(kwargs['categoria'], 'value'):
+                kwargs['categoria'] = kwargs['categoria'].value.lower()
+        
+        super().__init__(**kwargs)
 
 class ContaBancaria(Base):
     """Conta bancária do usuário"""
