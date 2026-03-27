@@ -39,8 +39,12 @@ def get_transacoes(
 
 def create_transacao(db: Session, transacao: TransacaoCreate, usuario_id: int) -> Transacao:
     """Cria uma nova transação"""
+    # Remover usuario_id do dict para evitar duplicação
+    transacao_data = transacao.model_dump()
+    transacao_data.pop('usuario_id', None)
+    
     db_transacao = Transacao(
-        **transacao.model_dump(),
+        **transacao_data,
         usuario_id=usuario_id
     )
     db.add(db_transacao)
