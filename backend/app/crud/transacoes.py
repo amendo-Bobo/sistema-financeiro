@@ -43,20 +43,14 @@ def create_transacao(db: Session, transacao: TransacaoCreate, usuario_id: int) -
     transacao_data = transacao.model_dump()
     transacao_data.pop('usuario_id', None)
     
-    # Extrair valor literal do enum para compatibilidade com banco
+    # Conversão direta como no login
     if 'tipo' in transacao_data:
-        # Se for objeto enum, pegar o valor
-        if hasattr(transacao_data['tipo'], 'value'):
-            transacao_data['tipo'] = transacao_data['tipo'].value
-        else:
-            transacao_data['tipo'] = str(transacao_data['tipo']).lower()
-    
+        transacao_data['tipo'] = str(transacao_data['tipo']).lower()
     if 'categoria' in transacao_data:
-        # Se for objeto enum, pegar o valor
-        if hasattr(transacao_data['categoria'], 'value'):
-            transacao_data['categoria'] = transacao_data['categoria'].value
-        else:
-            transacao_data['categoria'] = str(transacao_data['categoria']).lower()
+        transacao_data['categoria'] = str(transacao_data['categoria']).lower()
+    
+    print(f"DEBUG: Final tipo: '{transacao_data['tipo']}'")
+    print(f"DEBUG: Final categoria: '{transacao_data['categoria']}'")
     
     db_transacao = Transacao(
         **transacao_data,
