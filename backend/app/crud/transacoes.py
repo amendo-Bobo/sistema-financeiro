@@ -43,6 +43,12 @@ def create_transacao(db: Session, transacao: TransacaoCreate, usuario_id: int) -
     transacao_data = transacao.model_dump()
     transacao_data.pop('usuario_id', None)
     
+    # Forçar valores para minúsculas para compatibilidade com banco
+    if 'tipo' in transacao_data:
+        transacao_data['tipo'] = str(transacao_data['tipo']).lower()
+    if 'categoria' in transacao_data:
+        transacao_data['categoria'] = str(transacao_data['categoria']).lower()
+    
     db_transacao = Transacao(
         **transacao_data,
         usuario_id=usuario_id
