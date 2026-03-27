@@ -61,22 +61,6 @@ class Transacao(Base):
     # Relacionamentos
     usuario = relationship("User", back_populates="transacoes")
     categoria_personalizada = relationship("CategoriaPersonalizada", back_populates="transacoes")
-    
-    def __init__(self, **kwargs):
-        # Forçar valores para minúsculas
-        if 'tipo' in kwargs and kwargs['tipo']:
-            if isinstance(kwargs['tipo'], str):
-                kwargs['tipo'] = kwargs['tipo'].lower()
-            elif hasattr(kwargs['tipo'], 'value'):
-                kwargs['tipo'] = kwargs['tipo'].value.lower()
-        
-        if 'categoria' in kwargs and kwargs['categoria']:
-            if isinstance(kwargs['categoria'], str):
-                kwargs['categoria'] = kwargs['categoria'].lower()
-            elif hasattr(kwargs['categoria'], 'value'):
-                kwargs['categoria'] = kwargs['categoria'].value.lower()
-        
-        super().__init__(**kwargs)
 
 class ContaBancaria(Base):
     """Conta bancária do usuário"""
